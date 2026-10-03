@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Encuesta Claro</title>
+
+<style>
+
+body{
+margin:0;
+padding:20px;
+font-family:Arial,sans-serif;
+background:#f5f5f5;
+}
+
+.container{
+max-width:600px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:16px;
+box-shadow:0 4px 15px rgba(0,0,0,.1);
+margin-top:20px;
+}
+
+.hidden{
+display:none;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#d60000;
+color:white;
+border:none;
+border-radius:8px;
+font-size:18px;
+cursor:pointer;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:8px;
+box-sizing:border-box;
+}
+
+img{
+width:100%;
+height:auto;
+border-radius:12px;
+}
+
+h1,h2,h3{
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card" id="inicio">
+
+<img src="https://claropaysandu.github.io/encuestaclaro/SOREO2.png" alt="Bienvenida">
+
+<button type="button" onclick="iniciar()">
+COMENZAR ENCUESTA
+</button>
+
+</div>
+
+<div class="card hidden" id="encuesta">
+
+<h2>Encuesta Claro</h2>
+
+<input id="nombre" placeholder="Nombre y apellido">
+
+<input id="telefono" placeholder="Número de contacto">
+
+<label>¿Qué compañía utilizas?</label>
+
+<select id="compania">
+<option value="">Seleccionar</option>
+<option>Claro</option>
+<option>Tigo</option>
+<option>Antel</option>
+</select>
+
+<label>¿Usas contrato o prepago?</label>
+
+<select id="plan">
+<option value="">Seleccionar</option>
+<option>Contrato</option>
+<option>Prepago</option>
+</select>
+
+<label>¿Utilizas roaming?</label>
+
+<select id="roaming">
+<option value="">Seleccionar</option>
+<option>Sí</option>
+<option>No</option>
+</select>
+
+<label>¿Conocés lo que es Portabilidad Numérica?</label>
+
+<select id="portabilidad">
+<option value="">Seleccionar</option>
+<option>Sí</option>
+<option>No</option>
+</select>
+
+<button type="button" onclick="enviar()">
+ENVIAR
+</button>
+
+</div>
+
+<div class="card hidden" id="gracias">
+
+<h1>¡Gracias por responder! </h1>
+
+<p style="text-align:center;">
+Tus respuestas fueron registradas correctamente.
+</p>
+
+<h3>📍 Encontranos en:</h3>
+
+<p style="text-align:center;">
+18 de julio 1081
+</p>
+
+</div>
+
+</div>
+
+<script>
+
+const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzOi0JE2ME_7sp83cCD1hJN7u1z_nac425-FrMcJMqcyf7CP6l7VP9ktn25Y-lauq85/exec";
+
+function iniciar(){
+document.getElementById('inicio').classList.add('hidden');
+document.getElementById('encuesta').classList.remove('hidden');
+}
+
+async function enviar(){
+
+  const nombre=document.getElementById('nombre').value;
+  const telefono=document.getElementById('telefono').value;
+  const compania=document.getElementById('compania').value;
+  const plan=document.getElementById('plan').value;
+  const roaming=document.getElementById('roaming').value;
+  const portabilidad=document.getElementById('portabilidad').value;
+
+  if(!nombre || !telefono || !compania || !plan || !roaming || !portabilidad){
+    alert("Completa todos los campos");
+    return;
+  }
+
+  try {
+
+  console.log("Voy a enviar datos");
+
+  await fetch(WEBAPP_URL, {
+  method: "POST",
+  mode: "no-cors",
+  body: JSON.stringify({
+    nombre,
+    telefono,
+    compania,
+    plan,
+    roaming,
+    portabilidad
+  })
+});
+
+  console.log("Datos enviados");
+
+  document.getElementById('encuesta').classList.add('hidden');
+  document.getElementById('gracias').classList.remove('hidden');
+
+} catch(error) {
+
+  alert("Error al enviar la encuesta");
+  console.error(error);
+
+}
+
+}
+  </script>
+ 
+</body>
+</html>
+``
